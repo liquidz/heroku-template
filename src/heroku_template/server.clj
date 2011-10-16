@@ -2,18 +2,11 @@
   (:use
     heroku-template.core
     [ring.adapter.jetty :only [run-jetty]]
-    [ring.middleware params stacktrace reload]))
-
-(def develop?
-  (= "true" (get (System/getenv) "HEROKU_DEVELOP" "false")))
+    [ring.middleware params]))
 
 (def app
-  (let [_reload (if develop?  #(wrap-reload % '[heroku-template.core]) identity)
-        _stacktrace (if develop? wrap-stacktrace identity)]
-    (-> main-routes
-      wrap-params
-      _reload
-      _stacktrace)))
+  (-> main-routes
+    wrap-params))
 
 (defn -main []
   (let [port (Integer/parseInt (get (System/getenv) "PORT" "8080"))]
