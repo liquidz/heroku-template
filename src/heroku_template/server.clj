@@ -2,10 +2,11 @@
   (:use
     heroku-template.core
     [ring.adapter.jetty :only [run-jetty]]
-    [ring.middleware params]))
+    [ring.middleware params keyword-params]))
 
 (def app
   (-> main-routes
+    wrap-keyword-params
     wrap-params))
 
 (defn -main []
