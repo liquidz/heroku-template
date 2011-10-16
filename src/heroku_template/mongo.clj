@@ -5,7 +5,7 @@
 
 (declare init-mongo-collection)
 
-(defn split-mongo-url [url] ; {{{
+(defn- split-mongo-url [url] ; {{{
   "Parses mongodb url from heroku, eg. mongodb://user:pass@localhost:1234/db"
   (let [matcher (re-matcher #"^.*://(.*?):(.*?)@(.*?):(\d+)/(.*)$" url)]
     (when (.find matcher)
@@ -21,6 +21,6 @@
       (authenticate (:user config) (:pass config))
       (init-mongo-collection)))) ; }}}
 
-(defn init-mongo-collection []
+(defn- init-mongo-collection []
   (if-not (collection-exists? :firstcollection)
     (create-collection! :firstcollection)))
