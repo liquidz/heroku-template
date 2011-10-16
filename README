@@ -1,0 +1,14 @@
+# heroku-template
+
+clojure template for heroku
+
+## Usage
+
+for develop
+    # HEROKU_DEVELOP=true lein run
+
+## License
+
+Copyright (C) 2011 @uochan
+
+Distributed under the Eclipse Public License, the same as Clojure.
