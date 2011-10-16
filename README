@@ -4,8 +4,14 @@ clojure template for heroku
 
 ## Usage
 
+./setup.sh YOUR_NAMESPACE
+heroku create --stack cedar
+heroku addons:add mongohq:free
+git push heroku master
+
+
 for develop
-    # HEROKU_DEVELOP=true lein run
+	lein run YOUR_NAMESPACE.dev
 
 ## License
 
