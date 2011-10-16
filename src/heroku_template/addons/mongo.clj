@@ -1,4 +1,4 @@
-(ns heroku-template.mongo
+(ns heroku-template.addons.mongo
   (:use
     somnium.congomongo
     [somnium.congomongo.config :only [*mongo-config*]]))

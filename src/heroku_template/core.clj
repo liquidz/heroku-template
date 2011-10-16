@@ -1,9 +1,10 @@
 (ns heroku-template.core
   (:use
-    heroku-template.mongo
+    [heroku-template.addons mongo memcache]
     [compojure.core :only [defroutes GET POST]]
     [hiccup.core :only [html]]
-    somnium.congomongo)
+    somnium.congomongo
+    clj-spymemcached.core)
   (:require
     [compojure.route :as route]))
 
@@ -28,7 +29,18 @@
 (defroutes main-routes
   (GET "/" _
     (init-mongodb)
+    (init-memcache)
     (index))
+
+  (GET "/get" _
+    (init-memcache)
+    (cache-get :test :default "no data"))
+
+  (GET "/set/:value" [value]
+    (init-memcache)
+    (cache-set :test value :expiration 60)
+    "ok")
+
   (route/not-found "<h1>page not found</h1>"))
 
 
