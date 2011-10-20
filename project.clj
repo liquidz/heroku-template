@@ -8,4 +8,5 @@
                  [clj-spymemcached "1.0.1"]
                  [ring/ring-jetty-adapter "0.3.11"]]
   :dev-dependencies [[ring/ring-devel "0.3.11"]]
+  :web-content "public"
   :main heroku-template.server)

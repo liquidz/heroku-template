@@ -29,7 +29,6 @@
 (defroutes main-routes
   (GET "/" _
     (init-mongodb)
-    (init-memcache)
     (index))
 
   (GET "/get" _
@@ -41,6 +40,7 @@
     (cache-set :test value :expiration 60)
     "ok")
 
+  (route/files "/static/")
   (route/not-found "<h1>page not found</h1>"))
 
 
