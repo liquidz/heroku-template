@@ -11,10 +11,10 @@
     (when (.find matcher)
       (zipmap [:match :user :pass :host :port :db] (re-groups matcher))))) ; }}}
 
-(defn init-mongodb [] ; {{{
+(defn init-mongodb [& {:keys [local-dbname] :or {local-dbname "heroku-template"}}] ; {{{
   "Checks if connection and collection exist, otherwise initialize."
   (when (not (connection? *mongo-config*))
-    (let [mongo-url (get (System/getenv) "MONGOHQ_URL" "mongodb://:@localhost:27017/heroku_template")
+    (let [mongo-url (get (System/getenv) "MONGOHQ_URL" (str "mongodb://:@localhost:27017/" local-dbname))
           config    (split-mongo-url mongo-url)]
       (println "Initializing mongo @ " mongo-url)
       (mongo! :db (:db config) :host (:host config) :port (Integer. (:port config)))
