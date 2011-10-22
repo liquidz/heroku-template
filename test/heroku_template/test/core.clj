@@ -1,6 +1,17 @@
 (ns heroku-template.test.core
-  (:use [heroku-template.core])
+  (:use heroku-template.core
+        heroku-template.addons.mongo
+        somnium.congomongo)
   (:use [clojure.test]))
 
-(deftest replace-me ;; FIXME: write
-  (is false "No tests have been written."))
+(defmacro deftest* [name & expr] ; {{{
+  `(deftest ~name
+     (doseq [colname# heroku-template-collections]
+       (drop-coll! colname#))
+     ~@expr)) ; }}}
+
+(init-mongodb :local-dbname "heroku-template-test")
+
+(deftest replace-me
+  (insert! :test {:hello "world"})
+  (is (= "world" (:hello (fetch-one :test)))))
