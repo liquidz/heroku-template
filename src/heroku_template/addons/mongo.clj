@@ -1,7 +1,8 @@
 (ns heroku-template.addons.mongo
   (:use
     somnium.congomongo
-    [somnium.congomongo.config :only [*mongo-config*]]))
+    [somnium.congomongo.config :only [*mongo-config*]]
+    [clojure.data.json :only [json-str]]))
 
 (declare init-mongo-collection)
 
@@ -25,4 +26,10 @@
       (doseq [col heroku-template-collections]
         (if-not (collection-exists? col)
           (create-collection! col)))))) ; }}}
+
+(defn- id-conv [obj]
+  (if-let [id (:_id obj)] (assoc obj :_id (str id)) obj))
+
+(defn mongo->json [obj]
+  (json-str (if (sequential? obj) (map id-conv obj) (id-conv obj))))
 
