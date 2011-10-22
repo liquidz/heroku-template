@@ -12,6 +12,6 @@
 
 (init-mongodb :local-dbname "heroku-template-test")
 
-(deftest replace-me
+(deftest* replace-me
   (insert! :test {:hello "world"})
   (is (= "world" (:hello (fetch-one :test)))))
