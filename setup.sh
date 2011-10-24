@@ -17,12 +17,19 @@ sed -e "s/heroku-template/$NS/g" .backup/project.clj > project.clj
 # src
 cp -pir src .backup
 git rm -r src
-mkdir -p "src/html"
 mkdir -p "src/$NSPATH/addons"
 
 for FILE in `find .backup/src -type f`; do
 	NAME=`echo $FILE | cut -d"/" -f4-`
 	sed -e "s/heroku-template/$NS/g" $FILE > "src/$NSPATH/$NAME"
+done
+
+# html
+mkdir -p "src/html"
+
+for FILE in `find .backup/src/html -type f`; do
+    NAME=`echo $FILE | cut -d"/" -f4-`
+    sed -e "s/heroku-template/$NS/g" $FILE > "src/html/$NAME"
 done
 
 git add src
