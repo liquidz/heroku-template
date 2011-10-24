@@ -17,6 +17,7 @@ sed -e "s/heroku-template/$NS/g" .backup/project.clj > project.clj
 # src
 cp -pir src .backup
 git rm -r src
+mkdir -p "src/html"
 mkdir -p "src/$NSPATH/addons"
 
 for FILE in `find .backup/src -type f`; do
